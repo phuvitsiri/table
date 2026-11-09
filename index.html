@@ -1,0 +1,1487 @@
+
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#111014">
+<title>DOPE KUSRC | Table Reservation</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+
+<style>
+:root {
+ --bg:#0d0c10;
+ --panel:#19171e;
+ --panel2:#211e27;
+ --line:#38333f;
+ --text:#f7f3fa;
+ --muted:#aaa2b2;
+ --gold:#e6bd69;
+ --gold2:#f5d995;
+ --green:#67d5a0;
+ --red:#ff727d;
+ --radius:17px;
+}
+
+* {box-sizing:border-box}
+
+body {
+ margin:0;
+ background:radial-gradient(ellipse at 80% 0%,#39254a55,transparent 40%),var(--bg);
+ color:var(--text);
+ font-family:'Kanit',sans-serif;
+ min-height:100vh;
+}
+
+button,input,select {font:inherit}
+button {cursor:pointer}
+
+.app {
+ width:min(1400px,calc(100% - 40px));
+ margin:auto;
+}
+
+header {
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ padding:22px 0;
+ border-bottom:1px solid var(--line);
+ gap:15px;
+}
+
+.brand {
+ display:flex;
+ align-items:center;
+ gap:12px;
+}
+
+.logo {
+ width:46px;
+ height:46px;
+ display:grid;
+ place-items:center;
+ border-radius:14px;
+ background:linear-gradient(135deg,var(--gold2),#9d6d31);
+ color:#171016;
+ font:800 21px Manrope;
+}
+
+.brand h1 {
+ font:800 20px Manrope;
+ margin:0;
+ letter-spacing:1px;
+}
+
+.brand small {
+ color:var(--muted);
+ font-size:11px;
+ letter-spacing:2px;
+}
+
+nav {
+ display:flex;
+ gap:8px;
+ padding:16px 0;
+ overflow-x:auto;
+}
+
+.navbtn,.tab {
+ background:transparent;
+ border:1px solid transparent;
+ color:var(--muted);
+ padding:10px 15px;
+ border-radius:10px;
+ white-space:nowrap;
+}
+
+.navbtn.active,.navbtn:hover,
+.tab.active {
+ background:#ffffff0c;
+ border-color:var(--line);
+ color:var(--gold2);
+}
+
+main {padding:10px 0 40px}
+
+.hero {
+ display:flex;
+ justify-content:space-between;
+ align-items:end;
+ gap:20px;
+ padding:20px 0;
+}
+
+.eyebrow {
+ color:var(--gold);
+ font:700 11px Manrope;
+ letter-spacing:2px;
+}
+
+h2 {
+ font-size:clamp(25px,4vw,38px);
+ margin:6px 0;
+}
+
+.sub,.muted {color:var(--muted)}
+
+.sub {margin:0;font-size:14px}
+
+.layout {
+ display:grid;
+ grid-template-columns:minmax(0,1.2fr) minmax(300px,.8fr);
+ gap:18px;
+ align-items:start;
+}
+
+.card {
+ background:linear-gradient(145deg,#1c1a22,#151319);
+ border:1px solid var(--line);
+ border-radius:var(--radius);
+ padding:20px;
+ min-width:0;
+}
+
+.card h3 {margin:0 0 15px;font-size:18px}
+
+.card-head {
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ gap:10px;
+ margin-bottom:15px;
+}
+
+.card-head h3 {margin:0}
+
+.btn {
+ border:0;
+ border-radius:11px;
+ padding:11px 16px;
+ font-weight:600;
+ display:inline-flex;
+ align-items:center;
+ justify-content:center;
+ gap:7px;
+}
+
+.primary {
+ background:linear-gradient(135deg,var(--gold2),var(--gold));
+ color:#21170b;
+}
+
+.secondary {
+ background:#ffffff0b;
+ border:1px solid var(--line);
+ color:var(--text);
+}
+
+.danger {
+ background:#5a222b;
+ color:#ffdce0;
+}
+
+.success {
+ background:#173c30;
+ color:#b8f5d9;
+}
+
+.small {padding:7px 11px;font-size:12px}
+.full {width:100%}
+
+.field {
+ display:grid;
+ gap:6px;
+ margin-bottom:13px;
+}
+
+.field label {font-size:13px;color:#d8d1df}
+
+.field input,.field select {
+ width:100%;
+ min-height:46px;
+ background:#100f14;
+ border:1px solid #3a3542;
+ border-radius:10px;
+ color:white;
+ padding:10px 12px;
+ outline:none;
+}
+
+.field input:focus,.field select:focus {
+ border-color:var(--gold);
+}
+
+.formgrid {
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:12px;
+}
+
+.date-list {
+ display:grid;
+ grid-template-columns:repeat(4,1fr);
+ gap:8px;
+}
+
+.date-option {
+ background:#100f14;
+ border:1px solid var(--line);
+ color:white;
+ padding:10px 5px;
+ border-radius:11px;
+}
+
+.date-option b {display:block;font-size:18px}
+.date-option span {font-size:11px;color:var(--muted)}
+
+.date-option.selected {
+ border-color:var(--gold);
+ background:#e6bd6915;
+ color:var(--gold2);
+}
+
+.legend {
+ display:flex;
+ flex-wrap:wrap;
+ gap:13px;
+ color:var(--muted);
+ font-size:12px;
+ margin:12px 0;
+}
+
+.dot {
+ display:inline-block;
+ width:9px;
+ height:9px;
+ border-radius:50%;
+ margin-right:5px;
+}
+
+.floor {
+ background:#100f14;
+ border:1px solid var(--line);
+ border-radius:13px;
+ padding:13px;
+ overflow-x:auto;
+}
+
+.floor-inner {min-width:580px}
+
+.zone-title {
+ font-size:11px;
+ color:var(--muted);
+ letter-spacing:1px;
+ margin:10px 0;
+}
+
+.table-grid {
+ display:grid;
+ grid-template-columns:repeat(8,1fr);
+ gap:8px;
+ margin-bottom:15px;
+}
+
+.table-seat {
+ min-height:55px;
+ border:1px solid #514a5a;
+ background:#292331;
+ color:white;
+ border-radius:9px;
+ display:flex;
+ flex-direction:column;
+ align-items:center;
+ justify-content:center;
+ gap:2px;
+ font-size:12px;
+}
+
+.table-seat small {font-size:10px;color:#c5bdcb}
+
+.table-seat.available {
+ border-color:#3f765e;
+ background:#183328;
+}
+
+.table-seat.selected {
+ border:2px solid var(--gold);
+ background:#4a3920;
+ color:#ffe5a6;
+}
+
+.table-seat.booked {
+ background:#47252b;
+ border-color:#85434c;
+ color:#ffc3ca;
+ cursor:not-allowed;
+}
+
+.checkline {
+ display:flex;
+ gap:9px;
+ align-items:flex-start;
+ color:var(--muted);
+ font-size:12px;
+ margin:12px 0;
+}
+
+.checkline input {
+ accent-color:var(--gold);
+ margin-top:4px;
+}
+
+.notice {
+ padding:12px 14px;
+ border-radius:11px;
+ background:#e6bd6912;
+ border:1px solid #8c6b363f;
+ color:#e8d5ac;
+ font-size:12px;
+ margin:12px 0;
+}
+
+.ticket {
+ max-width:460px;
+ margin:20px auto;
+ background:#f8f3e9;
+ color:#211b20;
+ border-radius:18px;
+ overflow:hidden;
+}
+
+.ticket-top {
+ background:#211b25;
+ color:white;
+ text-align:center;
+ padding:22px;
+}
+
+.ticket-top h2 {
+ font:800 25px Manrope;
+ letter-spacing:2px;
+}
+
+.ticket-body {padding:20px}
+
+.ticket-code {
+ text-align:center;
+ font:800 25px Manrope;
+ letter-spacing:2px;
+ margin:8px;
+}
+
+.qr {
+ background:white;
+ padding:12px;
+ width:max-content;
+ margin:14px auto;
+ border-radius:10px;
+}
+
+.qr svg {display:block;width:180px;height:180px}
+
+.ticket-info {
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:12px;
+ border-top:1px dashed #bcb3a8;
+ padding-top:15px;
+}
+
+.ticket-info small {
+ display:block;
+ color:#746b70;
+ font-size:11px;
+}
+
+.ticket-info b {font-size:14px}
+
+.ticket-foot {
+ text-align:center;
+ color:#756d72;
+ font-size:11px;
+ margin-top:15px;
+}
+
+.stats {
+ display:grid;
+ grid-template-columns:repeat(4,1fr);
+ gap:12px;
+ margin-bottom:16px;
+}
+
+.stat {
+ background:#ffffff08;
+ border:1px solid var(--line);
+ padding:14px;
+ border-radius:13px;
+}
+
+.stat span {
+ display:block;
+ color:var(--muted);
+ font-size:12px;
+}
+
+.stat b {
+ font:800 25px Manrope;
+ color:var(--gold2);
+}
+
+.table-wrap {overflow-x:auto}
+
+table {
+ width:100%;
+ border-collapse:collapse;
+ min-width:650px;
+ font-size:13px;
+}
+
+th,td {
+ text-align:left;
+ padding:12px 10px;
+ border-bottom:1px solid var(--line);
+ white-space:nowrap;
+}
+
+th {color:var(--muted);font-weight:500}
+
+.badge {
+ display:inline-block;
+ padding:4px 8px;
+ border-radius:99px;
+ background:#ffffff12;
+ font-size:11px;
+}
+
+.badge.green {background:#173c30;color:#9be8c4}
+.badge.red {background:#54232b;color:#ffc0c8}
+
+.tabs {
+ display:flex;
+ gap:7px;
+ overflow-x:auto;
+ margin-bottom:16px;
+}
+
+.hidden {display:none!important}
+
+.empty {
+ text-align:center;
+ padding:30px;
+ color:var(--muted);
+}
+
+footer {
+ text-align:center;
+ color:#77717e;
+ border-top:1px solid var(--line);
+ padding:22px 0 30px;
+ font-size:11px;
+}
+
+#toast {
+ position:fixed;
+ bottom:20px;
+ left:50%;
+ transform:translateX(-50%);
+ background:#eee4cf;
+ color:#201a20;
+ padding:12px 18px;
+ border-radius:10px;
+ z-index:50;
+ max-width:90%;
+ text-align:center;
+}
+
+@media(max-width:850px) {
+ .layout {grid-template-columns:1fr}
+ .stats {grid-template-columns:repeat(2,1fr)}
+}
+
+@media(max-width:600px) {
+ .app {width:calc(100% - 24px)}
+ header {padding:15px 0}
+ .logo {width:40px;height:40px}
+ .brand h1 {font-size:17px}
+ .brand small {font-size:9px}
+ .hero {align-items:flex-start;flex-direction:column;padding:14px 0}
+ .card {padding:14px}
+ .formgrid {grid-template-columns:1fr;gap:0}
+ .date-list {grid-template-columns:repeat(4,minmax(65px,1fr))}
+ .date-option {padding:9px 3px}
+ .table-grid {gap:6px}
+ .table-seat {min-height:49px;font-size:11px}
+ .stats {gap:8px}
+ .stat {padding:10px}
+ .stat b {font-size:21px}
+ .ticket-info {gap:9px}
+ .ticket-info b {font-size:12px}
+ .qr svg {width:160px;height:160px}
+ .btn {min-height:42px}
+}
+
+@media(max-width:370px) {
+ .app {width:calc(100% - 18px)}
+ .navbtn {padding:8px 10px;font-size:12px}
+}
+@media print {
+ body {background:white;color:black}
+ header,nav,footer,.hero,.layout,#page-my,#page-staff {display:none!important}
+ #ticketResult {display:block!important}
+}
+</style>
+</head>
+
+<body>
+<div class="app">
+
+<header>
+ <div class="brand">
+  <div class="logo">D</div>
+  <div>
+   <h1>DOPE KUSRC</h1>
+   <small>TABLE RESERVATION</small>
+  </div>
+ </div>
+ <button class="btn secondary small" onclick="showPage('staff')">Staff Login</button>
+</header>
+
+<nav>
+ <button class="navbtn active" data-page="book" onclick="showPage('book')">จองโต๊ะ</button>
+ <button class="navbtn" data-page="my" onclick="showPage('my')">การจองของฉัน</button>
+ <button class="navbtn" data-page="staff" onclick="showPage('staff')">พนักงาน</button>
+</nav>
+
+<main>
+
+<!-- BOOKING PAGE -->
+<section id="page-book">
+
+ <div class="hero">
+  <div>
+   <div class="eyebrow">RESERVE YOUR NIGHT</div>
+   <h2>จองโต๊ะของคุณ</h2>
+   <p class="sub">เลือกวัน เลือกโต๊ะ แล้วเตรียมตัวมาสนุกกัน</p>
+  </div>
+  <span class="muted">OPEN DAILY · 18:00 – LATE</span>
+ </div>
+
+ <div class="layout">
+
+  <div class="card">
+
+   <div class="card-head">
+    <h3>① เลือกวันที่</h3>
+    <span class="muted">ล่วงหน้า 7 วัน</span>
+   </div>
+
+   <div class="date-list" id="dateList"></div>
+
+   <div class="card-head" style="margin-top:22px">
+    <h3>② เลือกโต๊ะ</h3>
+    <span class="muted" id="tableHint">เลือกโต๊ะที่ว่าง</span>
+   </div>
+
+   <div class="legend">
+    <span><i class="dot" style="background:#3f9b70"></i>ว่าง</span>
+    <span><i class="dot" style="background:#d6a84f"></i>เลือกแล้ว</span>
+    <span><i class="dot" style="background:#a64c58"></i>ถูกจองแล้ว</span>
+   </div>
+
+   <div class="floor">
+    <div class="floor-inner" id="floorMap"></div>
+   </div>
+
+   <div class="notice">
+    กรุณามาถึงก่อนเวลา 20:30 น. หากมาช้ากว่ากำหนด
+    โต๊ะอาจถูกปล่อยให้ลูกค้าท่านอื่นตามเงื่อนไขของร้าน
+   </div>
+
+  </div>
+
+  <div class="card">
+
+   <h3>③ ข้อมูลผู้จอง</h3>
+
+   <form id="bookingForm">
+
+    <div class="field">
+     <label>ชื่อผู้จอง *</label>
+     <input id="customerName" required maxlength="60" placeholder="ชื่อ-นามสกุล">
+    </div>
+
+    <div class="field">
+     <label>เบอร์โทรศัพท์ *</label>
+     <input id="customerPhone" required inputmode="tel" maxlength="15" placeholder="08XXXXXXXX">
+    </div>
+
+    <div class="formgrid">
+
+     <div class="field">
+      <label>จำนวนผู้เข้าร่วม *</label>
+      <select id="guests">
+       <option value="1">1 คน</option>
+       <option value="2" selected>2 คน</option>
+       <option value="3">3 คน</option>
+       <option value="4">4 คน</option>
+       <option value="5">5 คน</option>
+       <option value="6">6 คน</option>
+       <option value="7">7 คน</option>
+       <option value="8">8 คน</option>
+      </select>
+     </div>
+
+     <div class="field">
+      <label>โต๊ะที่เลือก</label>
+      <input id="selectedTableLabel" readonly placeholder="ยังไม่ได้เลือก">
+     </div>
+
+    </div>
+
+    <label class="checkline">
+     <input id="agree" type="checkbox" required>
+     <span>ฉันยอมรับเงื่อนไขการจองและการใช้บริการของร้าน *</span>
+    </label>
+
+    <button class="btn primary full" type="submit">
+     ยืนยันการจองโต๊ะ →
+    </button>
+
+   </form>
+
+   <p class="muted" style="font-size:11px;line-height:1.7">
+    ระบบทดลองใช้งาน ข้อมูลจะถูกบันทึกในเบราว์เซอร์เครื่องนี้
+   </p>
+
+  </div>
+
+ </div>
+
+ <div id="ticketResult" class="hidden card" style="margin-top:18px"></div>
+
+</section>
+
+<!-- CUSTOMER PAGE -->
+<section id="page-my" class="hidden">
+
+ <div class="hero">
+  <div>
+   <div class="eyebrow">YOUR RESERVATIONS</div>
+   <h2>การจองของฉัน</h2>
+   <p class="sub">ค้นหารายการจองด้วยเบอร์โทรศัพท์</p>
+  </div>
+ </div>
+
+ <div class="card">
+
+  <div class="formgrid">
+
+   <div class="field">
+    <label>เบอร์โทรศัพท์</label>
+    <input id="lookupPhone" inputmode="tel" placeholder="กรอกเบอร์โทรศัพท์">
+   </div>
+
+   <div class="field" style="align-self:end">
+    <button class="btn primary full" onclick="lookupBookings()">
+     ค้นหารายการจอง
+    </button>
+   </div>
+
+  </div>
+
+  <div id="myResults"></div>
+
+ </div>
+</section>
+
+<!-- STAFF PAGE -->
+<section id="page-staff" class="hidden">
+
+ <div class="hero">
+  <div>
+   <div class="eyebrow">STAFF CONTROL CENTER</div>
+   <h2>จัดการการจอง</h2>
+   <p class="sub">สำหรับพนักงานและผู้ดูแลระบบ</p>
+  </div>
+ </div>
+
+ <div id="staffLogin" class="card" style="max-width:420px;margin:auto">
+
+  <h3>เข้าสู่ระบบพนักงาน</h3>
+
+  <div class="field">
+   <label>รหัส PIN</label>
+   <input id="staffPin" type="password" inputmode="numeric" placeholder="PIN">
+  </div>
+
+  <button class="btn primary full" onclick="loginStaff()">เข้าสู่ระบบ</button>
+
+  <p class="muted" style="font-size:11px">
+   PIN เริ่มต้นสำหรับ Demo: 1234
+  </p>
+
+ </div>
+
+ <div id="staffPanel" class="hidden">
+
+  <div class="stats" id="staffStats"></div>
+
+  <div class="card">
+
+   <div class="tabs">
+    <button class="tab active" onclick="staffTab('bookings',this)">รายการจอง</button>
+    <button class="tab" onclick="staffTab('scan',this)">ตรวจ QR</button>
+    <button class="tab" onclick="staffTab('settings',this)">ตั้งค่า</button>
+   </div>
+
+   <div id="staffBookings">
+
+    <div class="card-head">
+     <h3>รายการจองทั้งหมด</h3>
+     <button class="btn secondary small" onclick="exportBookings()">Export CSV</button>
+    </div>
+
+    <div class="table-wrap" id="staffTable"></div>
+
+   </div>
+
+   <div id="staffScan" class="hidden">
+
+    <h3>ตรวจสอบ QR / Booking Code</h3>
+
+    <div class="field">
+     <label>ข้อมูลจาก QR หรือรหัสจอง</label>
+     <input id="scanInput" placeholder="DOPE-XXXXXXXX">
+    </div>
+
+    <button class="btn primary" onclick="scanBooking()">ตรวจสอบ</button>
+
+    <div id="scanResult"></div>
+
+    <p class="muted" style="font-size:11px">
+     สามารถใช้แอปกล้องภายนอกสแกน QR แล้วนำข้อความมาใส่ที่นี่
+     ระบบ Demo นี้ยังไม่ได้เปิดกล้องภายในเว็บ
+    </p>
+
+   </div>
+
+   <div id="staffSettings" class="hidden">
+
+    <h3>ตั้งค่าระบบ</h3>
+
+    <div class="formgrid">
+
+     <div class="field">
+      <label>จำนวนที่นั่งสูงสุดต่อวัน</label>
+      <input id="capacity" type="number" min="1">
+     </div>
+
+     <div class="field">
+      <label>เวลา Cutoff</label>
+      <input id="cutoff" type="time">
+     </div>
+
+    </div>
+
+    <button class="btn primary" onclick="saveSettings()">บันทึกการตั้งค่า</button>
+
+    <button class="btn danger small" onclick="resetDemo()">รีเซ็ตข้อมูล Demo</button>
+
+   </div>
+
+  </div>
+
+ </div>
+
+</section>
+</main>
+
+<footer>
+ DOPE KUSRC · TABLE RESERVATION DEMO · PLEASE ENJOY RESPONSIBLY
+</footer>
+
+</div>
+
+<div id="toast" class="hidden"></div>
+
+<script>
+const KEY = 'dope-kusrc-responsive-v1';
+
+const $ = id => document.getElementById(id);
+
+const today = new Date();
+today.setHours(0,0,0,0);
+
+let selectedDate = fmtDate(today);
+let selectedTable = '';
+let staffAuthed = false;
+
+function fmtDate(d) {
+ return [
+  d.getFullYear(),
+  String(d.getMonth()+1).padStart(2,'0'),
+  String(d.getDate()).padStart(2,'0')
+ ].join('-');
+}
+
+function dateLabel(s) {
+ return new Date(s+'T00:00:00').toLocaleDateString('th-TH',{
+  weekday:'short',
+  day:'numeric',
+  month:'short'
+ });
+}
+
+function load() {
+ try {
+  return JSON.parse(localStorage.getItem(KEY)) || {
+   bookings:[],
+   settings:{capacity:300,cutoff:'20:30'}
+  };
+ } catch(e) {
+  return {
+   bookings:[],
+   settings:{capacity:300,cutoff:'20:30'}
+  };
+ }
+}
+
+let db = load();
+
+function save() {
+ localStorage.setItem(KEY,JSON.stringify(db));
+}
+
+function toast(msg) {
+ $('toast').textContent = msg;
+ $('toast').classList.remove('hidden');
+
+ setTimeout(()=>{
+  $('toast').classList.add('hidden');
+ },2600);
+}
+
+function showPage(page) {
+ ['book','my','staff'].forEach(x=>{
+  $('page-'+x).classList.toggle('hidden',x!==page);
+ });
+
+ document.querySelectorAll('.navbtn').forEach(btn=>{
+  btn.classList.toggle('active',btn.dataset.page===page);
+ });
+
+ if(page==='staff') renderStaff();
+}
+
+/* DATE SELECTOR */
+
+function dateInit() {
+ let html='';
+
+ for(let i=0;i<8;i++) {
+  let d=new Date(today);
+  d.setDate(d.getDate()+i);
+
+  let s=fmtDate(d);
+
+  html+=`
+   <button class="date-option ${s===selectedDate?'selected':''}"
+    onclick="pickDate('${s}')">
+    <b>${d.getDate()}</b>
+    <span>${d.toLocaleDateString('th-TH',{weekday:'short',month:'short'})}</span>
+   </button>
+  `;
+ }
+
+ $('dateList').innerHTML=html;
+}
+
+/* TABLE DATA */
+
+const zones = [
+ {name:'VIP ZONE',prefix:'V',count:8,seats:8},
+ {name:'MAIN HALL',prefix:'M',count:24,seats:4},
+ {name:'BAR COUNTER',prefix:'B',count:10,seats:2},
+ {name:'OUTDOOR',prefix:'O',count:8,seats:6}
+];
+
+function bookingsForDate() {
+ return db.bookings.filter(b=>
+  b.date===selectedDate &&
+  !['cancelled','released'].includes(b.status)
+ );
+}
+
+function renderFloor() {
+
+ let booked=bookingsForDate().map(b=>b.table);
+ let html='';
+
+ zones.forEach(zone=>{
+
+  html+=`
+   <div class="zone-title">${zone.name}</div>
+   <div class="table-grid">
+  `;
+
+  for(let i=1;i<=zone.count;i++) {
+
+   let id=zone.prefix+String(i).padStart(2,'0');
+   let busy=booked.includes(id);
+
+   html+=`
+    <button
+     class="table-seat ${busy?'booked':'available'} ${selectedTable===id?'selected':''}"
+     ${busy?'disabled':''}
+     onclick="pickTable('${id}',${zone.seats})">
+
+     <b>${id}</b>
+     <small>${zone.seats} seats</small>
+
+    </button>
+   `;
+  }
+
+  html+='</div>';
+ });
+
+ $('floorMap').innerHTML=html;
+
+ let zone=zones.find(z=>z.prefix===selectedTable[0]);
+
+ $('selectedTableLabel').value=
+  selectedTable
+   ? selectedTable+' · '+zone.seats+' ที่นั่ง'
+   : '';
+}
+
+function pickDate(date) {
+ selectedDate=date;
+ selectedTable='';
+ dateInit();
+ renderFloor();
+}
+
+function pickTable(id,seats) {
+ selectedTable=id;
+
+ $('guests').value=Math.min(
+  Number($('guests').value),
+  seats
+ );
+
+ renderFloor();
+
+ $('tableHint').textContent='เลือก '+id;
+}
+
+/* BOOKING */
+
+function makeCode() {
+ return 'DOPE-'+Date.now().toString().slice(-7);
+}
+
+function qrPayload(b) {
+ return JSON.stringify({
+  type:'DOPE_KUSRC_BOOKING',
+  version:1,
+  code:b.code,
+  name:b.name,
+  phone:b.phone,
+  date:b.date,
+  table:b.table,
+  guests:b.guests,
+  token:b.token
+ });
+}
+
+function qrMarkup(data) {
+ try {
+  if(typeof qrcode!=='function') {
+   return '<p style="color:#333">QR library unavailable</p>';
+  }
+
+  let qr=qrcode(0,'M');
+  qr.addData(data);
+  qr.make();
+
+  return qr.createSvgTag(5,2);
+
+ } catch(e) {
+  return '<p style="color:#333">ไม่สามารถสร้าง QR ได้</p>';
+ }
+}
+
+$('bookingForm').addEventListener('submit',function(e) {
+
+ e.preventDefault();
+
+ let name=$('customerName').value.trim();
+ let phone=$('customerPhone').value.replace(/\D/g,'');
+ let guests=Number($('guests').value);
+
+ if(!selectedTable) {
+  return toast('กรุณาเลือกโต๊ะก่อน');
+ }
+
+ if(phone.length<9 || phone.length>10) {
+  return toast('กรุณาตรวจสอบเบอร์โทรศัพท์');
+ }
+
+ let zone=zones.find(z=>z.prefix===selectedTable[0]);
+
+ if(guests>zone.seats) {
+  return toast('จำนวนคนเกินความจุโต๊ะ');
+ }
+
+ let total=db.bookings
+  .filter(b=>b.date===selectedDate &&
+   !['cancelled','released'].includes(b.status))
+  .reduce((n,b)=>n+Number(b.guests),0);
+
+ if(total+guests>db.settings.capacity) {
+  return toast('จำนวนผู้จองเต็มแล้ว');
+ }
+
+ if(bookingsForDate().some(b=>b.table===selectedTable)) {
+  return toast('โต๊ะนี้ถูกจองแล้ว กรุณาเลือกโต๊ะอื่น');
+ }
+
+ let booking={
+  code:makeCode(),
+  token:crypto.randomUUID
+   ?crypto.randomUUID()
+   :String(Math.random()).slice(2),
+  name,
+  phone,
+  date:selectedDate,
+  table:selectedTable,
+  guests,
+  status:'confirmed',
+  created:new Date().toISOString()
+ };
+
+ db.bookings.push(booking);
+ save();
+
+ showTicket(booking);
+ renderFloor();
+
+ toast('จองโต๊ะสำเร็จ');
+});
+
+/* TICKET */
+
+function esc(s) {
+ return String(s).replace(/[&<>"']/g,c=>({
+  '&':'&amp;',
+  '<':'&lt;',
+  '>':'&gt;',
+  '"':'&quot;',
+  "'":'&#39;'
+ }[c]));
+}
+
+function showTicket(b) {
+
+ $('ticketResult').classList.remove('hidden');
+
+ $('ticketResult').innerHTML=`
+
+  <div class="ticket">
+
+   <div class="ticket-top">
+    <div class="eyebrow">RESERVATION CONFIRMED</div>
+    <h2>DOPE KUSRC</h2>
+    <div>TABLE RESERVATION</div>
+   </div>
+
+   <div class="ticket-body">
+
+    <div style="text-align:center;font-size:12px">
+     BOOKING CODE
+    </div>
+
+    <div class="ticket-code">${b.code}</div>
+
+    <div class="qr">
+     ${qrMarkup(qrPayload(b))}
+    </div>
+
+    <div class="ticket-info">
+
+     <div>
+      <small>ชื่อผู้จอง</small>
+      <b>${esc(b.name)}</b>
+     </div>
+
+     <div>
+      <small>เบอร์โทรศัพท์</small>
+      <b>${esc(b.phone)}</b>
+     </div>
+
+     <div>
+      <small>วันที่</small>
+      <b>${dateLabel(b.date)}</b>
+     </div>
+
+     <div>
+      <small>โต๊ะ</small>
+      <b>${b.table}</b>
+     </div>
+
+     <div>
+      <small>จำนวน</small>
+      <b>${b.guests} คน</b>
+     </div>
+
+     <div>
+      <small>สถานะ</small>
+      <b>ยืนยันแล้ว</b>
+     </div>
+
+    </div>
+
+    <div class="ticket-foot">
+     กรุณาแสดง QR นี้ต่อพนักงานหน้าร้าน
+    </div>
+
+   </div>
+  </div>
+
+  <button class="btn secondary full" onclick="window.print()">
+   พิมพ์ / บันทึกเป็น PDF
+  </button>
+ `;
+
+ $('ticketResult').scrollIntoView({
+  behavior:'smooth',
+  block:'start'
+ });
+}
+
+/* CUSTOMER LOOKUP */
+
+function lookupBookings() {
+
+ let phone=$('lookupPhone').value.replace(/\D/g,'');
+
+ if(!phone) return toast('กรุณากรอกเบอร์โทรศัพท์');
+
+ let list=db.bookings.filter(b=>
+  b.phone.replace(/\D/g,'')===phone
+ );
+
+ if(!list.length) {
+  $('myResults').innerHTML='<div class="empty">ไม่พบรายการจอง</div>';
+  return;
+ }
+
+ $('myResults').innerHTML=list.map(b=>`
+
+  <div class="card" style="margin-top:12px;box-shadow:none">
+
+   <div class="card-head">
+    <b>${b.code}</b>
+    <span class="badge ${b.status==='confirmed'?'green':'red'}">
+     ${b.status}
+    </span>
+   </div>
+
+   <div class="muted">
+    ${dateLabel(b.date)} · ${b.table} · ${b.guests} คน
+   </div>
+
+   <div style="display:flex;gap:8px;margin-top:12px">
+
+    <button class="btn secondary small"
+     onclick="showTicketByCode('${b.code}')">
+     ดู QR
+    </button>
+
+    ${b.status==='confirmed'?`
+     <button class="btn danger small"
+      onclick="cancelBooking('${b.code}')">
+      ยกเลิก
+     </button>
+    `:''}
+
+   </div>
+
+  </div>
+
+ `).join('');
+}
+
+function showTicketByCode(code) {
+ let b=db.bookings.find(x=>x.code===code);
+
+ if(b) {
+  showPage('book');
+  showTicket(b);
+ }
+}
+
+function cancelBooking(code) {
+
+ let b=db.bookings.find(x=>x.code===code);
+
+ if(!b) return;
+
+ if(!confirm('ยืนยันยกเลิกรายการจองนี้?')) return;
+
+ b.status='cancelled';
+
+ save();
+ lookupBookings();
+ renderFloor();
+
+ toast('ยกเลิกการจองแล้ว');
+}
+
+/* STAFF */
+
+function loginStaff() {
+
+ if($('staffPin').value!=='1234') {
+  return toast('PIN ไม่ถูกต้อง');
+ }
+
+ staffAuthed=true;
+
+ $('staffLogin').classList.add('hidden');
+ $('staffPanel').classList.remove('hidden');
+
+ renderStaff();
+}
+
+function renderStaff() {
+
+ if(!staffAuthed) return;
+
+ let all=db.bookings;
+
+ let confirmed=all.filter(b=>b.status==='confirmed');
+
+ $('staffStats').innerHTML=[
+
+  ['การจองทั้งหมด',all.length],
+
+  ['ยืนยันแล้ว',confirmed.length],
+
+  ['ยกเลิก',all.filter(b=>b.status==='cancelled').length],
+
+  ['ผู้เข้าร่วม',confirmed.reduce((n,b)=>n+b.guests,0)]
+
+ ].map(x=>`
+  <div class="stat">
+   <span>${x[0]}</span>
+   <b>${x[1]}</b>
+  </div>
+ `).join('');
+
+ $('staffTable').innerHTML=all.length?`
+
+  <table>
+   <thead>
+    <tr>
+     <th>รหัส</th>
+     <th>ชื่อ</th>
+     <th>วันที่</th>
+     <th>โต๊ะ</th>
+     <th>จำนวน</th>
+     <th>สถานะ</th>
+     <th>จัดการ</th>
+    </tr>
+   </thead>
+
+   <tbody>
+
+    ${all.slice().reverse().map(b=>`
+
+     <tr>
+      <td>${b.code}</td>
+      <td>${esc(b.name)}</td>
+      <td>${b.date}</td>
+      <td>${b.table}</td>
+      <td>${b.guests}</td>
+      <td>
+       <span class="badge ${b.status==='confirmed'?'green':'red'}">
+        ${b.status}
+       </span>
+      </td>
+      <td>
+       ${b.status==='confirmed'?`
+        <button class="btn danger small"
+         onclick="staffCancel('${b.code}')">
+         ยกเลิก
+        </button>
+       `:'—'}
+      </td>
+     </tr>
+
+    `).join('')}
+
+   </tbody>
+  </table>
+
+ `:'<div class="empty">ยังไม่มีรายการจอง</div>';
+
+ $('capacity').value=db.settings.capacity;
+ $('cutoff').value=db.settings.cutoff;
+}
+
+function staffCancel(code) {
+
+ let b=db.bookings.find(x=>x.code===code);
+
+ if(b) {
+  b.status='cancelled';
+  save();
+  renderStaff();
+  renderFloor();
+ }
+}
+
+function staffTab(tab,btn) {
+
+ ['bookings','scan','settings'].forEach(x=>{
+  $('staff'+x[0].toUpperCase()+x.slice(1))
+   .classList.toggle('hidden',x!==tab);
+ });
+
+ document.querySelectorAll('.tab').forEach(x=>{
+  x.classList.remove('active');
+ });
+
+ btn.classList.add('active');
+}
+
+/* QR SCANNER TEXT VALIDATION */
+
+function scanBooking() {
+
+ let raw=$('scanInput').value.trim();
+
+ if(!raw) return toast('กรุณากรอก QR หรือรหัสจอง');
+
+ let booking=null;
+
+ try {
+  let data=JSON.parse(raw);
+
+  if(data.type==='DOPE_KUSRC_BOOKING') {
+   booking=db.bookings.find(x=>
+    x.code===data.code &&
+    x.token===data.token
+   );
+  }
+
+ } catch(e) {}
+
+ if(!booking) {
+  booking=db.bookings.find(x=>
+   x.code===raw ||
+   x.token===raw ||
+   ('DOPEKUSRC:'+x.token)===raw
+  );
+ }
+
+ $('scanResult').innerHTML=booking?`
+
+  <div class="notice" style="margin-top:15px">
+   <b>${esc(booking.name)}</b><br>
+   ${booking.code}<br>
+   โต๊ะ ${booking.table}<br>
+   จำนวน ${booking.guests} คน<br>
+   วันที่ ${dateLabel(booking.date)}<br>
+   สถานะ: ${booking.status}
+  </div>
+
+ `:`
+
+  <div class="notice">
+   ไม่พบข้อมูลการจอง หรือ QR ไม่ถูกต้อง
+  </div>
+
+ `;
+}
+
+/* SETTINGS */
+
+function saveSettings() {
+
+ db.settings.capacity=Math.max(
+  1,
+  Number($('capacity').value)||300
+ );
+
+ db.settings.cutoff=$('cutoff').value||'20:30';
+
+ save();
+
+ toast('บันทึกการตั้งค่าแล้ว');
+}
+
+/* EXPORT CSV */
+
+function exportBookings() {
+
+ let rows=[
+
+  ['Code','Name','Phone','Date','Table','Guests','Status'],
+
+  ...db.bookings.map(b=>[
+   b.code,b.name,b.phone,b.date,b.table,b.guests,b.status
+  ])
+
+ ];
+
+ let csv='\ufeff'+rows.map(row=>
+  row.map(value=>'"'+String(value).replace(/"/g,'""')+'"').join(',')
+ ).join('\n');
+
+ let a=document.createElement('a');
+
+ a.href=URL.createObjectURL(
+  new Blob([csv],{type:'text/csv;charset=utf-8'})
+ );
+
+ a.download='dope-bookings.csv';
+ a.click();
+
+ URL.revokeObjectURL(a.href);
+}
+
+/* RESET DEMO */
+
+function resetDemo() {
+
+ if(!confirm('ลบข้อมูลการจองทั้งหมดในเครื่องนี้?')) return;
+
+ db={
+  bookings:[],
+  settings:{
+   capacity:300,
+   cutoff:'20:30'
+  }
+ };
+
+ save();
+ renderStaff();
+ renderFloor();
+
+ toast('รีเซ็ตข้อมูลแล้ว');
+}
+
+/* INITIALIZE */
+
+dateInit();
+renderFloor();
+
+</script>
+</body>
+</html>
